@@ -2,6 +2,7 @@ package com.sotkou.currencyconverter
 
 import android.os.Bundle
 import android.widget.TextView
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
@@ -24,13 +25,14 @@ class ResultActivity : AppCompatActivity() {
         resultTextView = findViewById(R.id.textView2)
 
         var result = intent.getStringExtra("Amount")
+        var rate = intent.getStringExtra("Rate")
 
-        resultTextView.text = convert(result).toString()+ " Euros"
+        resultTextView.text = convert(result, rate) + " Euros"
 
     }
 
-    private fun convert(usd: String?): String {
-        val result = (usd?.toDouble() ?: 0.0) / 1.09
+    private fun convert(usd: String?, rate: String?): String {
+        val result = usd?.toDouble()?.div(rate?.toDouble()!!) // Ποσό δολάρια / ισοτιμία
         return "%.02f".format(result)
     }
 }
